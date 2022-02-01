@@ -98,7 +98,7 @@ The knock, knock server is started using the following command:
 ```
 where `PORT` is replaced with the port number (an integer between 1 and 65535) on which the server is waiting for a connection.
 
-You should call the appropriate socket functions in the `main` function to allow a client to connect to the knock, knock server.
+Add calls to the appropriate socket functions in the `main` function in `knock.py` to allow a client to connect to the knock, knock server.
 
 #### Testing
 You can use the program `netcat` to help you test your code. First, start your knock, knock server using a randomly choosen port number between `5000` and `65000`. Then, in a separate terminal window connected to the same tigers server, start `netcat` using the following command:
@@ -122,16 +122,24 @@ If you also include the `-l` (lowercase L) option, then `netstat` will list all 
 You can end both your knock, knock server and `netcat` using `Ctrl+c.` It may take up to two minutes before you can reuse the same port number, so you may need to switch port numbers if you run your application multiple times in quick succession.
 
 ### Step 2: Receiving/sending messages
-Now, add code to your knock, knock server to receive messages from the client and send responses. Your server will need to receive three messages from the client (`Knock, knock`, `WORD`, and `PUNCHLINE`), and send three messages to the client (`Who's there?`, `WORD who?` and `Ha, ha, ha!`). 
+Now, add code to the `handle_client` function in `knock.py` to receive messages from the client and send responses. Your server will need to receive three messages from the client (`Knock, knock`, `WORD`, and `PUNCHLINE`), and send three messages to the client (`Who's there?`, `WORD who?` and `Ha, ha, ha!`). 
 
 It is important that the client and server conform to the "protocol" of a knock, knock joke. In other words, the server should only accept `Knock, knock` as the first message from the client. If the server sends something else, then the server should respond `I don't understand` and close the connection. There is no way to validate the second and third messages from the client (`WORD` and `PUNCHLINE`), so the server should accept whatever text the client sends.
 
-You should also call the appropriate socket function(s) functions to gracefully terminate the socket connection(s) after sending the last message (`Ha, ha, ha!`).
+You should also call the appropriate socket function to gracefully terminate the connection after sending the last message (`Ha, ha, ha!`).
+
+Remember to add a call to `handle_client` in `main`.
 
 #### Testing
-Again, you can use netcat to help you test your knock, knock server. Start netcat and your knock, knock application as discussed in Step 1. After a connection is established, you should be able to type a message in netcat, hit enter, and the server should recieve the message. Likewise, when the server sends a message, `netcat` should display the message. 
+Again, you can use `netcat` to help you test your knock, knock server. Start `netcat` and your knock, knock server as discussed in Step 1. After a connection is established, you should be able to type a message in `netcat`, hit enter, and the server should recieve the message. Likewise, when the server sends a message, `netcat` should display the message. 
 
-To test your messenger application with itself: start one instance of your application in server mode (as discussed in Part 1) and another instance of your application in client mode (as discussed in Part 1). You should be able to send and receive messages between the messenger applications in the same way you send and receive messages between the messenger application and netcat (described in the preceding paragraph).
+Note: `netcat` will not automatically end after the server has sent the last line (`Ha, ha, ha!`) and closed the connection. `Ctrl+d` will gracefully terminate `netcat`.
+
+### Step 3: Handling multiple clients
+Now, add code to the `main` function in `knock.py` to create a (`ThreadPoolExecutor`)[https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor]. Update `main` to accept connections from clients indefinitely. Each time a client connects, call the `submit` function on the created `ThreadPoolExecutor` to invoke the `handle_client` function for the connected client.
+
+#### Testing
+Run multiple instances of `netcat` at the same time (in different terminals) to test that your knock, knock server properly handles multiple clients in parallel.
 
 ## Submission instructions
 1. Commit and push your code to GitHub

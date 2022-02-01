@@ -1,4 +1,13 @@
+#!/usr/bin/python3
+
+#####
+# COSC 465: Computer Networks, Spring 2022
+# Lab 01: Using sockets
+#####
+
 from argparse import ArgumentParser
+
+MAX_MESSAGE_LENGTH = 280
 
 def main():
     # Parse arguments
@@ -10,6 +19,11 @@ def main():
     print("Running knock, knock server on port {}".format(settings.port))
 
     # TODO
+    return
+
+def handle_client(sock):
+    # TODO
+    return
 
 if __name__ == '__main__':
     main()
