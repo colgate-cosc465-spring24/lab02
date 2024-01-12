@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 #####
-# COSC 465: Computer Networks, Spring 2022
-# Lab 01: Using sockets
+# COSC 465: Computer Networks, Spring 2024
+# Lab 02: Using sockets
 #####
 
 from argparse import ArgumentParser
