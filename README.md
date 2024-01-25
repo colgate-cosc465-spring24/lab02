@@ -32,6 +32,8 @@ Ha, ha, ha!
 
 A client will send the first, third, and fifth lines to the server; the server will send the second, fourth, and sixth lines to the client (after receiving the preceding line).
 
+As you work on this lab, you may want to refer to the [class notes on sockets](https://docs.google.com/document/d/1EinSzBEAsr6s0y_bcYN7AbT-LtVldwimmaadM4KRVPY/edit#bookmark=id.j3c06wd4xlg5).
+
 ## Step 1: Establishing a connection
 The knock, knock server is started using the following command:
 ```
